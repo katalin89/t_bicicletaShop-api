@@ -29,7 +29,26 @@ public interface BicicletaRepo  extends JpaRepository<Bicicleta,Long> {
 
     Bicicleta findByModel(String model);
 
-    
+    @Transactional
+    @Modifying
+    @Query("select distinct b from Bicicleta  b order by b.pret")
+    List<Bicicleta>sortByPret();
+
+    @Transactional
+    @Modifying
+    @Query("select distinct b from Bicicleta b order by b.culoare")
+    List<Bicicleta>sortByColor();
+
+    @Transactional
+    @Modifying
+    @Query("select  distinct  b from Bicicleta  b order by  b.marca")
+    List<Bicicleta>sortByMarca();
+
+    @Transactional
+    @Modifying
+    @Query("select distinct  b from Bicicleta b order by b.model")
+    List<Bicicleta>sortByModel();
+
 }
 
 
