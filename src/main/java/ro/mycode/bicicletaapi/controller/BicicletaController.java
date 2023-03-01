@@ -1,9 +1,6 @@
 package ro.mycode.bicicletaapi.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.mycode.bicicletaapi.model.Bicicleta;
 import ro.mycode.bicicletaapi.repository.BicicletaRepo;
 
@@ -33,5 +30,23 @@ public class BicicletaController {
     List<Bicicleta>getAllBicicleteByMarca(@PathVariable String marca) {
         return bicicletaRepo.getAllBicicletaByMarca(marca);
     }
+
+    @PostMapping("api/v1/add")
+        public Bicicleta addBicicleta(@RequestBody Bicicleta bicicleta){
+            this.bicicletaRepo.save(bicicleta);
+            return bicicleta;
+        }
+
+
+
 }
+
+/*    @PostMapping("api/v1/add")// asa vom face add in baza de date
+    public  Masina  addCar(@RequestBody Masina masina){
+
+        this.masinaRepo.save(masina);
+
+
+        return  masina;
+    }*/
 
