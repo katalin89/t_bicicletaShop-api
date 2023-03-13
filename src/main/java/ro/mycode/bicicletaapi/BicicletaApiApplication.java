@@ -17,6 +17,9 @@ public class BicicletaApiApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(BicicletaRepo bicicletaRepo){
 		return args -> {
+			bicicletaRepo.getAllMarci().forEach((e)->{
+				System.out.println(e);
+			});
 
 		};
 	}

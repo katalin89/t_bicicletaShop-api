@@ -6,43 +6,55 @@ import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Data
-@Entity
-@Table(name = "bicicleta")
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity(name="Bicicleta")
+@Table(name = "biciclete")
+
 
 public class Bicicleta implements Comparable<Bicicleta> {
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @SequenceGenerator(name="bicicleta_seqience",sequenceName = "bicicleta_sequence",allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator ="bicicleta_seqience")
 
-    public int id;
-    public String marca;
-    public String model;
-    public String culoare;
-    public int pret;
+    private Long id;
 
-    @Override
-    public String toString() {
-        String text = "";
-        text += id + "," + marca + "," + model + "," + culoare + "," + pret;
-        return text;
-    }
+    @Column(name="marca",nullable = false)
+    @Size(min=4,message="Marca trebuie sa fie min 4 caractere")
+    private String marca;
 
-    public  int compare(Object o){
-        Bicicleta bicicleta=(Bicicleta) o;
-        if(this.pret>bicicleta.pret){
-            return  1;
-        }else if(this.pret< bicicleta.pret){
-            return 0;
+    @Column(name="model",nullable = false)
+    @Size(max=20,message = "Nu poate fi mai lung de 20 de caractere")
+    private String model;
 
-        }
-        return  -1;
-    }
+    @Column(name="culoare",nullable = false)
+    @Size(min=3,message="Trebuie sa fie min3 caractere")
+    private  String culoare;
+
+    @Column
+    @Min(value = 2000,message = "Pretul este minim 2000 lei")
+    private int pret;
+
 
     @Override
     public int compareTo(Bicicleta o) {
+        if(this.model.compareTo(o.model)>0){
+            return  1;
+        }
+        if(this.model.compareTo(o.model)<0)
+
+            return -1;
+        else
         return 0;
+    }
+
+    @Override
+    public  boolean equals(Object o){
+        Bicicleta bicicleta=(Bicicleta) o;
+        return  this.model.equals(bicicleta.model);
     }
 }
